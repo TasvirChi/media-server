@@ -283,17 +283,17 @@ public class LiveStreamEntry extends ModuleBase {
 		String entryPoint = clientProperties.getPropertyStr(LiveStreamEntry.CLIENT_PROPERTY_CONNECT_APP);
 		getLogger().debug("LiveStreamEntry::onConnect: " + entryPoint);
 
-		String[] requestParts = entryPoint.split("/");
+		String[] requestParts = entryPoint.split("\\?", 2);
+		if(requestParts.length < 2)
+			return;
+			
+		String[] queryParams = requestParts[1].split("&");
 		HashMap<String, String> requestParams = new HashMap<String, String>();
-		String field = null;
-		for (int i = 1; i < requestParts.length; ++i) {
-			if (field == null) {
-				field = requestParts[i];
-			} else {
-				requestParams.put(field, requestParts[i]);
-				getLogger().debug("LiveStreamEntry::onConnect: " + field + ": " + requestParams.get(field));
-				field = null;
-			}
+		String[] queryParamsParts;
+		for (int i = 0; i < queryParams.length; ++i) {
+			queryParamsParts = queryParams[i].split("=", 2);
+			if(queryParamsParts.length == 2)
+				requestParams.put(queryParamsParts[0], queryParamsParts[1]);
 		}
 		
 		if(!requestParams.containsKey(LiveStreamEntry.REQUEST_PROPERTY_PARTNER_ID))
