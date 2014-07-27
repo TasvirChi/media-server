@@ -56,7 +56,7 @@ media_servers.ini is optional and needed only for custom configurations.
 
 
 ## For all wowza machine: ##
-- Copy [KalturaWowzaServer.jar](https://github.com/kaltura/media-server/releases/download/rel-3.0.8.1/KalturaWowzaServer-3.0.8.1.jar "KalturaWowzaServer.jar") to @WOWZA_DIR@/lib/
+- Copy [KalturaWowzaServer.jar](https://github.com/kaltura/media-server/releases/download/rel-3.0.8.6/KalturaWowzaServer-3.0.8.6.jar "KalturaWowzaServer.jar") to @WOWZA_DIR@/lib/
 - Copy additional jar files (available in Kaltura Java client library) to @WOWZA_DIR@/lib/
  - [commons-codec-1.4.jar](https://github.com/kaltura/server-bin-linux-64bit/raw/master/wowza/commons-codec-1.4.jar "commons-codec-1.4.jar")
  - [commons-httpclient-3.1.jar](https://github.com/kaltura/server-bin-linux-64bit/raw/master/wowza/commons-httpclient-3.1.jar "commons-httpclient-3.1.jar")
