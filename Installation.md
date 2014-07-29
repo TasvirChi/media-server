@@ -422,8 +422,8 @@ http://{Wowza machine IP}:8088
   - Copy @WOWZA_DIR@/conf/Application.xml to @WOWZA_DIR@/conf/oflaDemo/Application.xml.
  - Configure @WOWZA_DIR@/conf/oflaDemo/Application.xml
  - /Root/Application/Name - oflaDemo
- - /Root/Application/AppType - Live
- - /Root/Streams/StreamType - live-record
+ - /Root/Application/AppType - VOD
+ - /Root/Streams/StreamType - record
  - /Root/Streams/StorageDir - @WEB_DIR@/content/webcam
  - /Root/Transcoder/LiveStreamTranscoder - transcoder
  - /Root/Transcoder/Templates - hdfvr.xml
