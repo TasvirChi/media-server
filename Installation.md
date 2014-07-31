@@ -406,11 +406,6 @@ media_servers.ini is optional and needed only for custom configurations.
 http://{Wowza machine IP}:8088
 - Give your application some name, for instance kVOD.
 - Use the API to define a new RTMP Delivery Profile for partner 0, according to the documentation, with the following specifications (the delivery profiles can only be created using admin KS for partner -2):
-    - Type - LOCAL PATH RTMP
-    - Streamer Type - RTMP
-    - url - http://{Wowza IP}/{VOD application name}/{random string}
-    - status - ACTIVE
-    - isDefault - TRUE VALUE
 - Create the following delivery profiles:
     - KalturaDeliveryProfileGenericRtmp
         - type - LOCAL_PATH_RTMP
