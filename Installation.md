@@ -420,7 +420,7 @@ http://{Wowza machine IP}:8088
         - status - ACTIVE
         - isDefault - TRUE_VALUE
         - pattern - {url}/manifest.f4m
-    - KalturaDeliveryProfileGenericHls
+    - KalturaDeliveryProfileGenericAppleHttp
         - type - LOCAL_PATH_APPLE_HTTP
         - streamerType - HLS
         - url - http(s)://{wowza ip}:{wowza port}/kVOD/__definst__
