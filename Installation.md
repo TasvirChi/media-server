@@ -405,12 +405,36 @@ media_servers.ini is optional and needed only for custom configurations.
 - Create a new VOD application, preferably using the Wowza Streaming Engine Manager application:  
 http://{Wowza machine IP}:8088
 - Give your application some name, for instance kVOD.
-- Use your API to define a new RTMP Delivery Profile for partner 0, according to the documentation, with the following specifications:
+- Use the API to define a new RTMP Delivery Profile for partner 0, according to the documentation, with the following specifications (the delivery profiles can only be created using admin KS for partner -2):
     - Type - LOCAL PATH RTMP
     - Streamer Type - RTMP
     - url - http://{Wowza IP}/{VOD application name}/{random string}
     - status - ACTIVE
     - isDefault - TRUE VALUE
+- Create the following delivery profiles:
+    - KalturaDeliveryProfileGenericRtmp
+        - type - LOCAL_PATH_RTMP
+        - streamerType - RTMP
+        - url -rtmp://{wowza ip}:{wowza port}/kVOD/__definst__
+        - status-ACTIVE
+        - isDefault - TRUE_VALUE
+    - KalturaDeliveryProfileGenericHds
+        - type - LOCAL_PATH_HDS
+        - streamerType - HDS
+        - url - http(s)://{wowza ip}:{wowza port}/kVOD/__definst__
+        - status - ACTIVE
+        - isDefault - TRUE_VALUE
+        - pattern - {url}/manifest.f4m
+    - KalturaDeliveryProfileGenericHls
+        - type - LOCAL_PATH_APPLE_HTTP
+        - streamerType - HLS
+        - url - http(s)://{wowza ip}:{wowza port}/kVOD/__definst__
+        - status - ACTIVE
+        - isDefault - TRUE_VALUE
+        - pattern - {url}/playlist.m3u8
+    
+    ** Important: the partner ID for all these delivery profiles needs to be set to partner 0 via the database, because of a known limitation.**
+                 
     
 ## For webcam recording servers ##
 
