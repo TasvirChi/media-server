@@ -420,14 +420,12 @@ http://{Wowza machine IP}:8088
         - url - http(s)://{wowza ip}:{wowza port}/kVOD/__definst__
         - status - ACTIVE
         - isDefault - TRUE_VALUE
-        - pattern - {url}/manifest.f4m
     - KalturaDeliveryProfileGenericAppleHttp
         - type - LOCAL_PATH_APPLE_HTTP
         - streamerType - HLS
         - url - http(s)://{wowza ip}:{wowza port}/kVOD/__definst__
         - status - ACTIVE
         - isDefault - TRUE_VALUE
-        - pattern - {url}/playlist.m3u8
     
     ** Important: the partner ID for all these delivery profiles needs to be set to partner 0 via the database, because of a known limitation.**
                  
