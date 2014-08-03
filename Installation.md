@@ -405,6 +405,7 @@ media_servers.ini is optional and needed only for custom configurations.
 - Create a new VOD application, preferably using the Wowza Streaming Engine Manager application:  
 http://{Wowza machine IP}:8088
 - Give your application some name, for instance kVOD.
+- Define the storage directory as @WEB_DIR@/content
 - Use the API to define a new RTMP Delivery Profile for partner 0, according to the documentation, with the following specifications (the delivery profiles can only be created using admin KS for partner -2):
 - Create the following delivery profiles:
     - KalturaDeliveryProfileGenericRtmp
