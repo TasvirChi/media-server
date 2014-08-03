@@ -442,54 +442,14 @@ http://{Wowza machine IP}:8088
  - Configure @WOWZA_DIR@/conf/oflaDemo/Application.xml
  - /Root/Application/Name - oflaDemo
  - /Root/Application/AppType - VOD
+ - /Root/Application/Client/Access/StreamWriteAccess - *
  - /Root/Streams/StreamType - record
  - /Root/Streams/StorageDir - @WEB_DIR@/content/webcam
- - /Root/Transcoder/LiveStreamTranscoder - transcoder
- - /Root/Transcoder/Templates - hdfvr.xml
 
  - **Note:** if you are interested in using the webcam recording with the KCW, you will have to reset the Wowza to save the recording files as FLV files. In order to do this:  
      - Edit the Server.xml
      - Change the value of the tag /Root/Server/Streams/DefaultStreamPrefix to 'flv'.
 
-
-**Create transcoding template**
-
- - Create @WOWZA_DIR@/transcoder/templates/hdfvr.xml template:
-
-```xml
-<Root>
-	<Transcode>
-		<Encodes>
-			<!-- Example Encode block for source, not required unless Member of StreamNameGroup. -->
-			<Encode>
-				<Enable>true</Enable>
-				<Name>aac</Name>
-				<StreamName>mp4:${SourceStreamName}</StreamName>
-				<Video>
-					<!-- H.264, PassThru, Disable -->
-					<Codec>PassThru</Codec>
-					<Bitrate>${SourceVideoBitrate}</Bitrate>
-					<Parameters>
-					</Parameters>
-				</Video>
-				<Audio>
-					<!-- AAC, PassThru, Disable -->
-					<Codec>AAC</Codec>
-					<Bitrate>48000</Bitrate>
-				</Audio>
-				<Properties>
-				</Properties>
-			</Encode>
-		</Encodes>
-		<Decode>
-		</Decode>
-		<StreamNameGroups>
-		</StreamNameGroups>
-		<Properties>
-		</Properties>
-	</Transcode>
-</Root>
-```
 
 **Configure file system**
 
