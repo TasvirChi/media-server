@@ -73,7 +73,7 @@ media_servers.ini is optional and needed only for custom configurations.
  - /Root/Application/Name - kLive
  - /Root/Application/AppType - Live
  - /Root/Application/Streams/StreamType - live
- - /Root/Application/Streams/StorageDir - @WEB_DIR@/content/recorded
+ - /Root/Application/Streams/StorageDir - @WEB_DIR@/content/recorded - **Important: note that the path on the Wowza should match the @WEB_DIR@ path on the API server, if the Wowza is running on a separate machine. **
  - /Root/Application/Streams/LiveStreamPacketizers: 
 	 - cupertinostreamingpacketizer
 	 - mpegdashstreamingpacketizer
