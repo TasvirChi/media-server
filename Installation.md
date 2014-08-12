@@ -411,23 +411,24 @@ http://{Wowza machine IP}:8088
     - KalturaDeliveryProfileGenericRtmp
         - type - LOCAL_PATH_RTMP
         - streamerType - RTMP
-        - url -rtmp://{wowza ip}:{wowza port}/kVOD/__definst__
+        - url -rtmp://{wowza ip/hostname}:{wowza port}/kVOD/__definst__
         - status-ACTIVE
         - isDefault - TRUE_VALUE
     - KalturaDeliveryProfileGenericHds
         - type - LOCAL_PATH_HDS
         - streamerType - HDS
-        - url - http(s)://{wowza ip}:{wowza port}/kVOD/__definst__
+        - url - http(s)://{wowza ip/hostname}:{wowza port}/kVOD/__definst__
         - status - ACTIVE
         - isDefault - TRUE_VALUE
     - KalturaDeliveryProfileGenericAppleHttp
         - type - LOCAL_PATH_APPLE_HTTP
         - streamerType - HLS
-        - url - http(s)://{wowza ip}:{wowza port}/kVOD/__definst__
+        - url - http(s)://{wowza ip/hostname}:{wowza port}/kVOD/__definst__
         - status - ACTIVE
         - isDefault - TRUE_VALUE
     
     ** Important: the partner ID for all these delivery profiles needs to be set to partner 0 via the database, because of a known limitation.**
+**Important: the Wowza IP/hostname must match the certificate used by the environment in case of SSL. **
                  
     
 ## For webcam recording servers ##
