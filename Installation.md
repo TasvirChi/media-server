@@ -440,11 +440,11 @@ http://{Wowza machine IP}:8088
   - Create @WOWZA_DIR@/conf/oflaDemo directory
   - Copy @WOWZA_DIR@/conf/Application.xml to @WOWZA_DIR@/conf/oflaDemo/Application.xml.
  - Configure @WOWZA_DIR@/conf/oflaDemo/Application.xml
- - /Root/Application/Name - oflaDemo
- - /Root/Application/AppType - VOD
- - /Root/Application/Client/Access/StreamWriteAccess - *
- - /Root/Streams/StreamType - record
- - /Root/Streams/StorageDir - @WEB_DIR@/content/webcam
+ 	- /Root/Application/Name - oflaDemo
+ 	- /Root/Application/AppType - VOD
+ 	- /Root/Application/Client/Access/StreamWriteAccess - *
+ 	- /Root/Streams/StreamType - record
+ 	- /Root/Streams/StorageDir - @WEB_DIR@/content/webcam
 
  - **Note:** if you are interested in using the webcam recording with the KCW, you will have to reset the Wowza to save the recording files as FLV files. In order to do this:  
      - Edit the Server.xml
