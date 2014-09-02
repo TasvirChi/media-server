@@ -126,12 +126,12 @@ media_servers.ini is optional and needed only for custom configurations.
 </Property>
 <Property>
 	<Name>dvrChunkDurationMinimum</Name>
-	<Value>10000</Value>
+	<Value>3000</Value>
 	<Type>Integer</Type>
 </Property>
 <Property>
 	<Name>dvrMinimumAvailableChunks</Name>
-	<Value>5</Value>
+	<Value>3</Value>
 	<Type>Integer</Type>
 </Property>
 ```
