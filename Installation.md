@@ -350,7 +350,13 @@ media_servers.ini is optional and needed only for custom configurations.
 **Edit @WOWZA_DIR@/conf/VHost.xml:**
 
 - Uncomment /Root/VHost/HostPortList/HostPort with port 443 for SSL.
-- /Root/VHost/HostPortList/HostPort/SSLConfig/KeyStorePassword - set the password for your certificate file.  
+- /Root/VHost/HostPortList/HostPort/SSLConfig/KeyStorePassword - set the password for your certificate file.
+
+** Finalization  **
+
+  - Go to the Wowza Engine Manager application in your browser (http://{WowzaHostname}:8088) 
+  - In the control console go to Applications->{your application name}->Incoming Security
+  - Ensure that the "RTMP publishing" feature is set to "Open (no authentication required)".
 
 
 ## Add Multicast (for on-prem installations) 
