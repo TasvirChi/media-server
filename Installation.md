@@ -352,7 +352,7 @@ media_servers.ini is optional and needed only for custom configurations.
 - Uncomment /Root/VHost/HostPortList/HostPort with port 443 for SSL.
 - /Root/VHost/HostPortList/HostPort/SSLConfig/KeyStorePassword - set the password for your certificate file.
 
-** Finalization  **
+**Finalization**
 
   - Go to the Wowza Engine Manager application in your browser (http://{WowzaHostname}:8088) 
   - In the control console go to Applications->{your application name}->Incoming Security
