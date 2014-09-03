@@ -3,17 +3,17 @@
 
 
 ## Plugins: ##
-- Add Wowza to plugins.ini.
+- Ensure that the Wowza plugin exists plugins.ini.
 
 ## Configuration ##
 - Add the IP range containing the Wowza machine IP to the @APP_DIR@/configurations/local.ini:  
 	internal_ip_range = {required range}  
   Note that this is not necessary for a Hybrid eCDN installation.
 - Edit the @APP_DIR@/configurations/broadcast.ini file according to the broadcast.template.ini file.
-- If there is a need for non-default configuration of the WSE (for instance, different port), you will need to create a custom configuration file on your API machine under @APP_DIR@/configurations/media_servers.ini, according to the template found here: https://github.com/kaltura/media-server/blob/3.0.8/media_servers.template.ini.
+- If there is a need for non-default configuration of the Wowza Streaming Engine (WSE) (for instance, different port), you will need to create a custom configuration file on your API machine under @APP_DIR@/configurations/media_servers.ini, according to the template found here: https://github.com/kaltura/media-server/blob/3.0.8/media_servers.template.ini.
 
 ## Admin Console: ##
-- Add admin.ini new permissions, see admin.template.ini:
+- Ensure that the admin.ini file contains the following permissions:
  - FEATURE_LIVE_STREAM_RECORD
  - FEATURE_KALTURA_LIVE_STREAM
  - FEATURE_KALTURA_LIVE_STREAM_TRANSCODE
