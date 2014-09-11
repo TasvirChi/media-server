@@ -428,10 +428,11 @@ http://{Wowza machine IP}:8088
         - isDefault - TRUE_VALUE
     - KalturaDeliveryProfileGenericAppleHttp
         - type - LOCAL_PATH_APPLE_HTTP
-        - streamerType - HLS
+        - streamerType - applehttp
         - url - http(s)://{wowza ip/hostname}:{wowza port}/kVOD/__definst__
         - status - ACTIVE
         - isDefault - TRUE_VALUE
+       **important: remember to disable any existing delivery profiles that belong to partner 0 with the streamer types mentioned above. **
     
     ** Important: the partner ID for all these delivery profiles needs to be set to partner 0 via the database, because of a known limitation.**
 **Important: the Wowza IP/hostname must match the certificate used by the environment in case of SSL. **
