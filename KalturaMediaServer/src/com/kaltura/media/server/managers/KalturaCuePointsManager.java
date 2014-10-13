@@ -151,10 +151,13 @@ public abstract class KalturaCuePointsManager extends KalturaManager implements 
 					Date now = new Date();
 					for(String entryId : keySet()){
 						Date stopTime = get(entryId);
-						if(now.after(stopTime)){
+						if(stopTime != null && now.after(stopTime)){
 							remove(entryId);
 						}
 						else{
+							if(stopTime == null){
+								logger.debug("stop time for entry [" + entryId + "] is set to null, sync point will be sent forever");
+							}
 							createSyncPoint(entryId);
 						}
 					}
@@ -234,6 +237,7 @@ public abstract class KalturaCuePointsManager extends KalturaManager implements 
 			for(CuePointsCreator cuePointsCreator: cuePointsCreators.values()){
 				synchronized (cuePointsCreator) {
 					if(cuePointsCreator.containsKey(entryId)){
+						logger.debug("stop sync points for entry [" + entryId + "]");
 						cuePointsCreator.remove(entryId);
 						if(cuePointsCreator.size() == 0){
 							cuePointsCreator.timer.cancel();
@@ -301,7 +305,13 @@ public abstract class KalturaCuePointsManager extends KalturaManager implements 
 				cuePointsCreator = new CuePointsCreator(interval);
 				cuePointsCreators.put(interval, cuePointsCreator);
 			}
-			cuePointsCreator.put(liveEntryId, stopTime);
+			
+			if(duration == -1){
+				cuePointsCreator.put(liveEntryId, null);
+			}
+			else{
+				cuePointsCreator.put(liveEntryId, stopTime);
+			}
 		}
 	}
 

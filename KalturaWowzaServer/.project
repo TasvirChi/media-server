@@ -34,7 +34,7 @@
 		<link>
 			<name>KalturaMediaServer</name>
 			<type>2</type>
-			<location>C:/opt/kalsource/media-server/KalturaMediaServer/src</location>
+			<location>C:/Users/yossi.papiashvili/workspace/media-server/KalturaMediaServer/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>
