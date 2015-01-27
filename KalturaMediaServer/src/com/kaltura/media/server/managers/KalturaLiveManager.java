@@ -767,10 +767,11 @@ abstract public class KalturaLiveManager extends KalturaManager implements ILive
 	public void cancelReplace (String entryId) {
 		logger.info("Cancel replacement is required");
 		KalturaLiveEntry liveEntry = get(entryId);
+		KalturaMediaServerIndex index = getMediaServerIndexForEntry(entryId);
 		
 		KalturaClient impersonateClient = impersonate(liveEntry.partnerId);
 		try {
-			if (liveEntry.recordedEntryId != null && liveEntry.recordedEntryId.length() > 0) {
+			if (liveEntry.recordedEntryId != null && liveEntry.recordedEntryId.length() > 0 && KalturaMediaServerIndex.PRIMARY.equals(index)) {
 				impersonateClient.getMediaService().cancelReplace(liveEntry.recordedEntryId);
 			}
 		}
