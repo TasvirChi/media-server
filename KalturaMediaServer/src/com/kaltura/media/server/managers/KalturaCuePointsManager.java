@@ -239,6 +239,7 @@ public abstract class KalturaCuePointsManager extends KalturaManager implements 
 	}
 
 	protected void onUnPublish(String entryId) {
+		CuePointsCreator removeCreator = null;
 		synchronized (cuePointsCreators) {
 			for(CuePointsCreator cuePointsCreator: cuePointsCreators.values()){
 				synchronized (cuePointsCreator) {
@@ -247,12 +248,18 @@ public abstract class KalturaCuePointsManager extends KalturaManager implements 
 						if(cuePointsCreator.size() == 0){
 							cuePointsCreator.timer.cancel();
 							cuePointsCreator.timer.purge();
-							cuePointsCreators.remove(cuePointsCreator.interval);
+							removeCreator = cuePointsCreator;
 						}
 					}
 				}
 			}
 		}
+		
+		if(removeCreator != null) {
+			cuePointsCreators.remove(removeCreator.interval);
+		}
+		
+		CuePointsLoader removeLoader = null;
 		synchronized (cuePointsLoaders) {
 			for(CuePointsLoader cuePointsLoader: cuePointsLoaders){
 				synchronized(cuePointsLoader){
@@ -261,14 +268,17 @@ public abstract class KalturaCuePointsManager extends KalturaManager implements 
 						if(cuePointsLoader.size() == 0){
 							cuePointsLoader.timer.cancel();
 							cuePointsLoader.timer.purge();
-							cuePointsLoaders.remove(cuePointsLoader);
-							
-							if(cuePointsLoader == currentCuePointsLoader){
-								currentCuePointsLoader = null;
-							}
+							removeLoader = cuePointsLoader;
 						}
 					}
 				}
+			}
+		}
+		
+		if(removeLoader != null) {
+			cuePointsLoaders.remove(removeLoader);
+			if(removeLoader == currentCuePointsLoader){
+				currentCuePointsLoader = null;
 			}
 		}
 	}
