@@ -74,6 +74,10 @@ task executeMain(type: JavaExec) {
         if (project.hasProperty("mainClass")) {
             main = mainClass
         }
+        if (project.hasProperty("argsList")) {
+            args(argsList.split(','))
+        }
+
     }
     classpath = sourceSets.main.runtimeClasspath
 }
