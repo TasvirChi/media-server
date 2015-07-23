@@ -189,6 +189,7 @@ public class PtsComparator {
         log.info("getting files from folder: " + storageDir);
         List<File> files = new ArrayList<>();
         listDirectories(new File(storageDir), files);
+        log.info("finished to list directories: " + files.size());
         for (File f : files) {
 
             //filter DVR out
