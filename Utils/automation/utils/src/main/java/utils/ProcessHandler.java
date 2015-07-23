@@ -26,7 +26,11 @@ public class ProcessHandler {
     public static ProcessBuilder createProcess(String command) {
         log.info("Create process with command: " + command);
         String[] splitCommand = command.split(" ");
-        ProcessBuilder pb = new ProcessBuilder(splitCommand);
+        return createProcess(splitCommand);
+    }
+
+    public static ProcessBuilder createProcess(String[] command) {
+        ProcessBuilder pb = new ProcessBuilder(command);
         pb.redirectErrorStream(true);
         return pb;
     }
