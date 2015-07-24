@@ -24,7 +24,7 @@ public class PtsComparator {
 
     private static double ptsReader(File fin) throws Exception {
 
-        //search for pkt_dts_time=299.955378
+        //search for pkt_pts=299.955378
 
         BufferedReader br = null;
         try {
@@ -32,7 +32,7 @@ public class PtsComparator {
 
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.startsWith("pkt_dts_time")) {
+                if (line.startsWith("pkt_pts")) {
                     String[] l = line.split("=");
                     if (l.length != 2) {
                         throw new Exception("file: " + fin.getAbsolutePath() + " pkt_dts_time does not contain 2 values");
