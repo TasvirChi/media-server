@@ -37,7 +37,7 @@ public class PtsComparator {
                     if (l.length != 2) {
                         throw new Exception("file: " + fin.getAbsolutePath() + " pkt_dts_time does not contain 2 values");
                     }
-                   return Double.valueOf(l[1].trim()) / 90000d;
+                   return Double.valueOf(l[1].trim());
                 }
             }
         }  finally {
@@ -153,12 +153,11 @@ public class PtsComparator {
             double pts1 = extractPts(file1);
             double pts2 = extractPts(file2);
 
-            log.debug("pts1: " + pts1);
-            log.debug("pts2: " + pts2);
-            //compare
             double diff = Math.abs(pts1 - pts2);
-            if (diff > MAX_PTS_DIFF) {
-                log.error("file1: " + file1.getAbsolutePath() + " pts: " + pts1 + "\nfile2: " + file2.getAbsolutePath() + " pts: " + pts2 + "\ndiff: " + diff);
+            log.debug("file1: " + file1.getAbsolutePath() + " pts: " + pts1 + "\nfile2: " + file2.getAbsolutePath() + " pts: " + pts2 + "\ndiff: " + diff);
+
+            if ( (diff/90000d) > MAX_PTS_DIFF) {
+                log.error("ts are with different PTS");
             }
         } catch (Exception e) {
             log.error("failed to get PTS from " + file1.getAbsolutePath() + " or " + file2.getAbsolutePath(),e);
