@@ -37,7 +37,7 @@ public class PtsComparator {
                     if (l.length != 2) {
                         throw new Exception("file: " + fin.getAbsolutePath() + " pkt_dts_time does not contain 2 values");
                     }
-                   return Double.valueOf(l[1].trim());
+                   return Double.valueOf(l[1].trim()) / 90000d;
                 }
             }
         }  finally {
@@ -165,14 +165,7 @@ public class PtsComparator {
         }
     }
 
-    public static void main(String[] args) {
-
-        String storageDir = args[0];
-        pathToFfprobe = args[1];
-
-        log.info("storage dir: " + storageDir);
-        log.info("path to ffprobe: " + pathToFfprobe);
-
+    public static void comparePtsDir(File dir) {
 
         IOFileFilter filter = new IOFileFilter() {
             @Override
@@ -185,20 +178,34 @@ public class PtsComparator {
                 return !name.contains("DVR");
             }
         };
+        //filter DVR out
+        Collection<File> sourceOnly = FileUtils.listFiles(dir, new SuffixFileFilter("ts"), filter);
+        List<File> sortedList = getSortedFilesList(sourceOnly);
+
+        log.info("about to compare files from: " + dir.getAbsolutePath() + ". num files: " + sortedList.size());
+        comparePts(sortedList);
+        log.info("===========================================================");
+    }
+    public static void main(String[] args) {
+
+        String storageDir = args[0];
+        pathToFfprobe = args[1];
+        String allFiles = args[2];
+
+        log.info("storage dir: " + storageDir);
+        log.info("path to ffprobe: " + pathToFfprobe);
+
+        if (allFiles.equals("false")) {
+            comparePtsDir(new File(storageDir));
+            return;
+        }
 
         log.info("getting files from folder: " + storageDir);
         List<File> files = new ArrayList<>();
         listDirectories(new File(storageDir), files);
         log.info("finished to list directories: " + files.size());
         for (File f : files) {
-
-            //filter DVR out
-            Collection<File> sourceOnly = FileUtils.listFiles(f, new SuffixFileFilter("ts"), filter);
-            List<File> sortedList = getSortedFilesList(sourceOnly);
-
-            log.info("about to compare files from: " + f.getAbsolutePath() + ". num files: " + sortedList.size());
-            comparePts(sortedList);
-            log.info("===========================================================");
+            comparePtsDir(f);
         }
     }
 
@@ -206,6 +213,9 @@ public class PtsComparator {
 
         File[] files = dir.listFiles();
         for (File file : files) {
+            if (file.getName().startsWith("flavor") || file.getName().startsWith("iter") || file.getName().startsWith("diff") || file.getName().startsWith("chunklist")) {
+                continue;
+            }
             if (file.isDirectory()) {
                 if (file.getName().startsWith("2015_07")) {
                     list.add(file);
@@ -213,6 +223,5 @@ public class PtsComparator {
                 listDirectories(file, list);
             }
         }
-
     }
 }
