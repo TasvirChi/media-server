@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . '/KalturaWowzaServer/build/tmp/github-php-client/GitHubClient.php');
+require_once(__DIR__ . '/BorhanWowzaServer/build/tmp/github-php-client/GitHubClient.php');
 
 function uploadAsset($client, $filename, $owner, $repo, $releaseId, $contentType) {
     echo "Uploading asset: " . $filename . "\n";
@@ -8,7 +8,7 @@ function uploadAsset($client, $filename, $owner, $repo, $releaseId, $contentType
     echo "Asset uploaded: $filename\n";
 }
 
-$owner = 'kaltura';
+$owner = 'borhan';
 $repo = 'media-server';
 $username = $argv[1];
 $password = $argv[2];
@@ -36,13 +36,13 @@ $release = $client->repos->releases->create($owner, $repo, $tag_name, $target_co
 $releaseId = $release->getId();
 echo "Release created with id $releaseId\n";
 
-$jars = glob(__DIR__ . "/KalturaWowzaServer/build/tmp/artifacts/Kaltura*.jar");
+$jars = glob(__DIR__ . "/BorhanWowzaServer/build/tmp/artifacts/Borhan*.jar");
 foreach ($jars as $jar) {
     uploadAsset($client, $jar, $owner, $repo, $releaseId,'application/java-archive');
 }
 
 //upload the zip distribution
-$filePath = __DIR__ . "/KalturaWowzaServer/build/distributions/KalturaWowzaServer-install-$version.zip";
+$filePath = __DIR__ . "/BorhanWowzaServer/build/distributions/BorhanWowzaServer-install-$version.zip";
 uploadAsset($client, $filePath, $owner, $repo, $releaseId,'application/zip');
 
 exit(0);

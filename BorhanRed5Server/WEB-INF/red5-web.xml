@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:lang="http://www.springframework.org/schema/lang"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd                            
+    http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-3.0.xsd">
+	
+	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	    <property name="location" value="/WEB-INF/red5-web.properties" />
+	</bean>
+	
+	<bean id="web.context" class="org.red5.server.Context" autowire="byType" />
+	
+	<bean id="web.scope" class="org.red5.server.scope.WebScope" init-method="register">
+		<property name="server" ref="red5.server" />
+		<property name="parent" ref="global.scope" />
+		<property name="context" ref="web.context" />
+		<property name="handler" ref="web.handler" />
+		<property name="contextPath" value="${webapp.contextPath}" />
+		<property name="virtualHosts" value="${webapp.virtualHosts}" />
+	</bean>
+
+	<!--
+	<bean id="web.handler" class="org.red5.server.adapter.ApplicationAdapter" />
+	-->
+	
+	<bean id="web.handler" class="com.borhan.media.server.red5.listeners.LiveStreamEntry">
+		<property name="BorhanServerURL" value="http://hudsontest4.borhan.dev" />
+		<property name="BorhanServerAdminSecret" value="00f1338b4b4faf897f087d00cd4980d2" />
+		<property name="BorhanServerTimeout" value="180" />
+		<property name="BorhanServerManagers" value="com.borhan.media.server.red5.StatusManager, com.borhan.media.server.red5.LiveStreamManager" />
+		<property name="BorhanServerWebServices" value="com.borhan.media.server.api.services.BorhanLiveService" />
+		<property name="BorhanServerStatusInterval" value="300" />
+		<property name="BorhanLiveStreamKeepAliveInterval" value="60" />
+		<property name="BorhanLiveStreamMaxDvrWindow" value="86400" />
+		<property name="BorhanRecordedChunckMaxDuration" value="10" />
+		<property name="BorhanServerWebServicesPort" value="888" />
+		<property name="BorhanServerWebServicesHost" value="192.168.192.57" />
+		<property name="BorhanRecordedFileGroup" value="apache" />
+		<property name="BorhanIsLiveRegistrationMinBufferTime" value="30" />
+	</bean>
+
+</beans>

@@ -50,12 +50,12 @@ foreach ($files as $f) {
 asort($tmp);
 $files = array_keys($tmp);
 
-require_once 'client/KalturaClient.php';
-$clientConfig = new KalturaConfiguration();
+require_once 'client/BorhanClient.php';
+$clientConfig = new BorhanConfiguration();
 $clientConfig->serviceUrl = $config['serviceUrl'];
 $clientConfig->partnerId = $config['partnerId'];
-$client = new KalturaClient($clientConfig);
-$ks = $client->generateSessionV2($config['adminSecret'], '', KalturaSessionType::ADMIN, $clientConfig->partnerId, 86400, "disableentitlement");
+$client = new BorhanClient($clientConfig);
+$ks = $client->generateSessionV2($config['adminSecret'], '', BorhanSessionType::ADMIN, $clientConfig->partnerId, 86400, "disableentitlement");
 $client->setKs($ks);
 
 foreach ($files as $f)
@@ -67,7 +67,7 @@ foreach ($files as $f)
 			handleUploadXMLResource($client, $taskXml, $baseErrorDir);
 			moveFile($f, $baseCompleteDir . basename($f));
 		}
-		catch(KalturaClientException $e) {
+		catch(BorhanClientException $e) {
 			logException($e);
 			$baseFileName = basename($f,".xml");
 			$fileParts = explode(".", $baseFileName);
@@ -92,7 +92,7 @@ foreach ($files as $f)
 	}
 }
 
-function handleUploadXMLResource (KalturaClient $client, SimpleXMLElement $uploadXML, $baseErrorDir)
+function handleUploadXMLResource (BorhanClient $client, SimpleXMLElement $uploadXML, $baseErrorDir)
 {
 	$entryId = strval($uploadXML->entryId);
 	$assetId = strval($uploadXML->assetId);
@@ -126,25 +126,25 @@ function handleUploadXMLResource (KalturaClient $client, SimpleXMLElement $uploa
 
 /**
  *	Function returns contentResource of the appropriate type to the workMode
- *	@param KalturaClinet $client
+ *	@param BorhanClinet $client
  *	@param string $filePath
  *	@param string $workMode
  *
- *	@return KalturaDataCenterContentResource
+ *	@return BorhanDataCenterContentResource
  */
-function getContentResource (KalturaClient $client, $workMode, $filepath) 
+function getContentResource (BorhanClient $client, $workMode, $filepath) 
 {
-	if ($workMode == 'kaltura') {
-		$resource = new KalturaServerFileResource();
+	if ($workMode == 'borhan') {
+		$resource = new BorhanServerFileResource();
 		$resource->localFilePath = $filepath;
 		return $resource;
 	}
 	else 
 	{
-		$uploadToken = $client->uploadToken->add(new KalturaUploadToken());
+		$uploadToken = $client->uploadToken->add(new BorhanUploadToken());
 		$uploadToken = $client->uploadToken->upload($uploadToken->id, realpath($filepath));
 
-		$resource = new KalturaUploadedFileTokenResource();
+		$resource = new BorhanUploadedFileTokenResource();
 		$resource->token = $uploadToken->id;
 			
 		return $resource;		

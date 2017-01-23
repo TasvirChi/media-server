@@ -1,4 +1,4 @@
-# Kaltura Server #
+# Borhan Server #
 
 
 
@@ -10,13 +10,13 @@
 	internal_ip_range = {required range}  
   Note that this is not necessary for a Hybrid eCDN installation.
 - Edit the @APP_DIR@/configurations/broadcast.ini file according to the broadcast.template.ini file.
-- If there is a need for non-default configuration of the WSE (for instance, different port), you will need to create a custom configuration file on your API machine under @APP_DIR@/configurations/media_servers.ini, according to the template found here: https://github.com/kaltura/media-server/blob/3.0.8/media_servers.template.ini.
+- If there is a need for non-default configuration of the WSE (for instance, different port), you will need to create a custom configuration file on your API machine under @APP_DIR@/configurations/media_servers.ini, according to the template found here: https://github.com/borhan/media-server/blob/3.0.8/media_servers.template.ini.
 
 ## Admin Console: ##
 - Add admin.ini new permissions, see admin.template.ini:
  - FEATURE_LIVE_STREAM_RECORD
- - FEATURE_KALTURA_LIVE_STREAM
- - FEATURE_KALTURA_LIVE_STREAM_TRANSCODE
+ - FEATURE_BORHAN_LIVE_STREAM
+ - FEATURE_BORHAN_LIVE_STREAM_TRANSCODE
 
 
 
@@ -40,7 +40,7 @@ media_servers.ini is optional and needed only for custom configurations.
 ## Prerequisites: ##
 - Wowza media server 4.0.1 or above.
 - Java jre 1.7.
-- kaltura group (gid = 613) or any other group that apache user is associated with.
+- borhan group (gid = 613) or any other group that apache user is associated with.
 - Write access to @WEB_DIR@/content/recorded directory.
 - Read access to symbolic link of @WEB_DIR@/content under @WEB_DIR@/content/recorded:
   ln –s @WEB_DIR@/content @WEB_DIR@/content/recorded/content
@@ -56,12 +56,12 @@ media_servers.ini is optional and needed only for custom configurations.
 
 
 ## For all wowza machine: ##
-- Copy [KalturaWowzaServer.jar](https://github.com/kaltura/media-server/releases/download/rel-3.0.8.1/KalturaWowzaServer-3.0.8.1.jar "KalturaWowzaServer.jar") to @WOWZA_DIR@/lib/
-- Copy additional jar files (available in Kaltura Java client library) to @WOWZA_DIR@/lib/
- - [commons-codec-1.4.jar](https://github.com/kaltura/server-bin-linux-64bit/raw/master/wowza/commons-codec-1.4.jar "commons-codec-1.4.jar")
- - [commons-httpclient-3.1.jar](https://github.com/kaltura/server-bin-linux-64bit/raw/master/wowza/commons-httpclient-3.1.jar "commons-httpclient-3.1.jar")
- - [commons-logging-1.1.1.jar](https://github.com/kaltura/server-bin-linux-64bit/raw/master/wowza/commons-logging-1.1.1.jar "commons-logging-1.1.1.jar") 
- - [commons-lang-2.6.jar](https://github.com/kaltura/server-bin-linux-64bit/raw/master/wowza/commons-lang-2.6.jar "commons-lang-2.6.jar")
+- Copy [BorhanWowzaServer.jar](https://github.com/borhan/media-server/releases/download/rel-3.0.8.1/BorhanWowzaServer-3.0.8.1.jar "BorhanWowzaServer.jar") to @WOWZA_DIR@/lib/
+- Copy additional jar files (available in Borhan Java client library) to @WOWZA_DIR@/lib/
+ - [commons-codec-1.4.jar](https://github.com/borhan/server-bin-linux-64bit/raw/master/wowza/commons-codec-1.4.jar "commons-codec-1.4.jar")
+ - [commons-httpclient-3.1.jar](https://github.com/borhan/server-bin-linux-64bit/raw/master/wowza/commons-httpclient-3.1.jar "commons-httpclient-3.1.jar")
+ - [commons-logging-1.1.1.jar](https://github.com/borhan/server-bin-linux-64bit/raw/master/wowza/commons-logging-1.1.1.jar "commons-logging-1.1.1.jar") 
+ - [commons-lang-2.6.jar](https://github.com/borhan/server-bin-linux-64bit/raw/master/wowza/commons-lang-2.6.jar "commons-lang-2.6.jar")
 - Delete all directories under @WOWZA_DIR@/applications, but not the applications directory itself.
 - Create @WOWZA_DIR@/applications/kLive directory.
 - Delete all directories under @WOWZA_DIR@/conf, but not the conf directory itself.
@@ -219,7 +219,7 @@ media_servers.ini is optional and needed only for custom configurations.
 <Module>
 	<Name>LiveStreamEntry</Name>
 	<Description>LiveStreamEntry</Description>
-	<Class>com.kaltura.media.server.wowza.listeners.LiveStreamEntry</Class>
+	<Class>com.borhan.media.server.wowza.listeners.LiveStreamEntry</Class>
 </Module>
 ```
  
@@ -237,12 +237,12 @@ media_servers.ini is optional and needed only for custom configurations.
 </Property>
 <Property>
 	<Name>ApplicationManagers</Name>
-	<Value>com.kaltura.media.server.wowza.CuePointsManager</Value>
+	<Value>com.borhan.media.server.wowza.CuePointsManager</Value>
 	<Type>String</Type>
 </Property>
 <!-- Time in ms in which sync points will be sent on the stream -->
 <Property>
-	<Name>KalturaSyncPointsInterval</Name>
+	<Name>BorhanSyncPointsInterval</Name>
 	<Value>8000</Value>
 	<Type>Integer</Type>
 </Property>
@@ -255,75 +255,75 @@ media_servers.ini is optional and needed only for custom configurations.
  - /Root/Server/ServerListeners:
 ```xml
 <ServerListener>
-	<BaseClass>com.kaltura.media.server.wowza.listeners.ServerListener</BaseClass>
+	<BaseClass>com.borhan.media.server.wowza.listeners.ServerListener</BaseClass>
 </ServerListener>
 ```
 
  - /Root/Server/Properties:
 ```xml
 <Property>
-	<Name>KalturaServerURL</Name>
+	<Name>BorhanServerURL</Name>
 	<Value>http://@WWW_DIR@</Value>
 </Property>
 <Property>
-	<!-- Kaltura media server partner (-5) admin secret -->
-	<Name>KalturaServerAdminSecret</Name>
+	<!-- Borhan media server partner (-5) admin secret -->
+	<Name>BorhanServerAdminSecret</Name>
 	<Value>@MEDIA_PARTNER_ADMIN_SECRET@</Value>
 </Property>
 <Property>
-	<!-- Kaltura API http timeout -->
-	<Name>KalturaServerTimeout</Name>
+	<!-- Borhan API http timeout -->
+	<Name>BorhanServerTimeout</Name>
 	<Value>30</Value>
 </Property>
 <Property>
-	<!-- Kaltura server managers to be loaded -->
-	<Name>KalturaServerManagers</Name>
-	<Value>com.kaltura.media.server.wowza.StatusManager, com.kaltura.media.server.wowza.LiveStreamManager, com.kaltura.media.server.wowza.PushPublishManager</Value>
+	<!-- Borhan server managers to be loaded -->
+	<Name>BorhanServerManagers</Name>
+	<Value>com.borhan.media.server.wowza.StatusManager, com.borhan.media.server.wowza.LiveStreamManager, com.borhan.media.server.wowza.PushPublishManager</Value>
 </Property>
 <Property>
-	<!-- Kaltura web services to be loaded -->
-	<Name>KalturaServerWebServices</Name>
-	<Value>com.kaltura.media.server.api.services.KalturaLiveService</Value>
+	<!-- Borhan web services to be loaded -->
+	<Name>BorhanServerWebServices</Name>
+	<Value>com.borhan.media.server.api.services.BorhanLiveService</Value>
 </Property>
 <Property>
-	<!-- Kaltura server status reporting interval, in seconds -->
-	<Name>KalturaServerStatusInterval</Name>
+	<!-- Borhan server status reporting interval, in seconds -->
+	<Name>BorhanServerStatusInterval</Name>
 	<Value>300</Value>
 </Property>
 <Property>
-	<!-- Kaltura interval to update that live stream entry is still broadcasting, in seconds -->
-	<Name>KalturaLiveStreamKeepAliveInterval</Name>
+	<!-- Borhan interval to update that live stream entry is still broadcasting, in seconds -->
+	<Name>BorhanLiveStreamKeepAliveInterval</Name>
 	<Value>60</Value>
 </Property>
 <Property>
-	<!-- Kaltura maximum DVR window, in seconds, should be 24 hours -->
-	<Name>KalturaLiveStreamMaxDvrWindow</Name>
+	<!-- Borhan maximum DVR window, in seconds, should be 24 hours -->
+	<Name>BorhanLiveStreamMaxDvrWindow</Name>
 	<Value>7200</Value>
 </Property>
 <Property>
-	<!-- Kaltura maximum recorded chunk duration, in minutes, should be an hour -->
-	<Name>KalturaRecordedChunckMaxDuration</Name>
+	<!-- Borhan maximum recorded chunk duration, in minutes, should be an hour -->
+	<Name>BorhanRecordedChunckMaxDuration</Name>
 	<Value>60</Value>
 </Property>
 <Property>
-	<!-- Kaltura web services http port -->
-	<Name>KalturaServerWebServicesPort</Name>
+	<!-- Borhan web services http port -->
+	<Name>BorhanServerWebServicesPort</Name>
 	<Value>888</Value>
 </Property>
 <Property>
-	<!-- Kaltura web services binding host name -->
-	<Name>KalturaServerWebServicesHost</Name>
+	<!-- Borhan web services binding host name -->
+	<Name>BorhanServerWebServicesHost</Name>
 	<Value>0.0.0.0</Value>
 </Property>
 <Property>
-	<!-- Kaltura recorded file group -->
-	<Name>KalturaRecordedFileGroup</Name>
-	<!-- kaltura (gid = 613) or any other group that apache user is associated with. -->
-	<Value>kaltura</Value>
+	<!-- Borhan recorded file group -->
+	<Name>BorhanRecordedFileGroup</Name>
+	<!-- borhan (gid = 613) or any other group that apache user is associated with. -->
+	<Value>borhan</Value>
 </Property>
 <Property>
 	<!-- Minimum buffering time before registering entry as is-live (in seconds) -->
-	<Name>KalturaIsLiveRegistrationMinBufferTime</Name>
+	<Name>BorhanIsLiveRegistrationMinBufferTime</Name>
 	<Value>60</Value>
 </Property>
 ```
@@ -331,16 +331,16 @@ media_servers.ini is optional and needed only for custom configurations.
 
 **Edit @WOWZA_DIR@/conf/log4j.properties:**
  - Set `log4j.rootCategory` = `INFO`
- - Add `log4j.logger.com.kaltura` = `DEBUG`
+ - Add `log4j.logger.com.borhan` = `DEBUG`
  - Comment out `log4j.appender.serverAccess.layout` and its sub values `log4j.appender.serverAccess.layout.*` 
  - Add `log4j.appender.serverAccess.layout` = `org.apache.log4j.PatternLayout`
  - Add `log4j.appender.serverAccess.layout.ConversionPattern` = `[%d{yyyy-MM-dd HH:mm:ss}][%t][%C:%M] %p - %m - (%F:%L) %n`
- - Change `log4j.appender.serverAccess.File` = `@LOG_DIR@/kaltura_mediaserver_access.log`
+ - Change `log4j.appender.serverAccess.File` = `@LOG_DIR@/borhan_mediaserver_access.log`
  - Comment out `log4j.appender.serverError.layout` and its sub values `log4j.appender.serverError.layout.*` 
  - Add `log4j.appender.serverError.layout` = `org.apache.log4j.PatternLayout`
  - Add `log4j.appender.serverError.layout.ConversionPattern` = `[%d{yyyy-MM-dd HH:mm:ss}][%t][%C:%M] %p - %m - (%F:%L) %n` 
- - Change `log4j.appender.serverError.File` = `@LOG_DIR@/kaltura_mediaserver_error.log`
- - Change `log4j.appender.serverStats.File` = `@LOG_DIR@/kaltura_mediaserver_stats.log`
+ - Change `log4j.appender.serverError.File` = `@LOG_DIR@/borhan_mediaserver_error.log`
+ - Change `log4j.appender.serverStats.File` = `@LOG_DIR@/borhan_mediaserver_stats.log`
 
 
 
@@ -385,11 +385,11 @@ media_servers.ini is optional and needed only for custom configurations.
 </Property>
 ```
 
-- In the same file, edit the value of the KalturaServerManagers property:  
+- In the same file, edit the value of the BorhanServerManagers property:  
 ```xml
 <Property>
-	<Name>KalturaServerManagers</Name>
-	<Value>{previous value}, com.kaltura.media.server.wowza.PushPublishManager</Value>
+	<Name>BorhanServerManagers</Name>
+	<Value>{previous value}, com.borhan.media.server.wowza.PushPublishManager</Value>
 </Property>
 ```
 
@@ -402,7 +402,7 @@ media_servers.ini is optional and needed only for custom configurations.
 ```
 # On-Prem specific configuration #
 
-**Important: both of the following configurations require that the Wowza Streaming Engine have access to the @WEB_DIR@ directory used by the Kaltura installation (the same location used by the API, the batch workers, etc)**.
+**Important: both of the following configurations require that the Wowza Streaming Engine have access to the @WEB_DIR@ directory used by the Borhan installation (the same location used by the API, the batch workers, etc)**.
 
 ## Using the Wowza as the environment FMS ##
 - Create a new VOD application, preferably using the Wowza Streaming Engine Manager application:  
@@ -431,7 +431,7 @@ http://{Wowza machine IP}:8088
  - /Root/Transcoder/LiveStreamTranscoder - transcoder
  - /Root/Transcoder/Templates - hdfvr.xml
 
- - **Note:** if you are interested in using the webcam recording with the KCW, you will have to reset the Wowza to save the recording files as FLV files. In order to do this:  
+ - **Note:** if you are interested in using the webcam recording with the BCW, you will have to reset the Wowza to save the recording files as FLV files. In order to do this:  
      - Edit the Server.xml
      - Change the value of the tag /Root/Server/Streams/DefaultStreamPrefix to 'flv'.
 
@@ -477,10 +477,10 @@ http://{Wowza machine IP}:8088
 
 **Configure file system**
 
- - Make sure that @WEB_DIR@/content/webcam group is kaltura or apache
+ - Make sure that @WEB_DIR@/content/webcam group is borhan or apache
  - Define permissions stickiness on the group:
   - chmod +t @WEB_DIR@/content/webcam
   - chmod g+s @WEB_DIR@/content/webcam
 
 **Configure UI-Conf**
-- Edit the ui-conf of the KCW/KRecorder you are using to record from webcam- replace the {HOST_NAME} token in the uiconf with the hostname:port of the Wowza machine.
+- Edit the ui-conf of the BCW/KRecorder you are using to record from webcam- replace the {HOST_NAME} token in the uiconf with the hostname:port of the Wowza machine.

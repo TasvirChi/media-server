@@ -8,7 +8,7 @@ subprojects {
         mavenCentral()
         maven {
             //TODO replace to master
-            url "https://raw.github.com/kaltura/KalturaGeneratedAPIClientsJava/PLAT-2504/maven"
+            url "https://raw.github.com/borhan/BorhanGeneratedAPIClientsJava/PLAT-2504/maven"
         }
     }
 

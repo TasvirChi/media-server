@@ -11,16 +11,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import kaltura.actions.StartSession;
+import borhan.actions.StartSession;
 
-import com.kaltura.client.KalturaApiException;
-import com.kaltura.client.KalturaClient;
-import com.kaltura.client.enums.KalturaLiveStreamEntryOrderBy;
-import com.kaltura.client.enums.KalturaNullableBoolean;
-import com.kaltura.client.types.KalturaFilterPager;
-import com.kaltura.client.types.KalturaLiveStreamEntry;
-import com.kaltura.client.types.KalturaLiveStreamEntryFilter;
-import com.kaltura.client.types.KalturaLiveStreamListResponse;
+import com.borhan.client.BorhanApiException;
+import com.borhan.client.BorhanClient;
+import com.borhan.client.enums.BorhanLiveStreamEntryOrderBy;
+import com.borhan.client.enums.BorhanNullableBoolean;
+import com.borhan.client.types.BorhanFilterPager;
+import com.borhan.client.types.BorhanLiveStreamEntry;
+import com.borhan.client.types.BorhanLiveStreamEntryFilter;
+import com.borhan.client.types.BorhanLiveStreamListResponse;
 
 import configurations.ConfigurationReader;
 import configurations.TestConfig;
@@ -35,7 +35,7 @@ public class SystemMonitor {
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
 	private TestConfig config;
 	private StartSession session;
-	private KalturaClient client;
+	private BorhanClient client;
 	
 	public static void main(String[] args) throws Exception {
 		SystemMonitor monitor = new SystemMonitor();
@@ -93,23 +93,23 @@ public class SystemMonitor {
 		return ConfigurationReader.getTestConfigurations(u.getPath());
     }
 	
-	private Map<String, Integer> getEntries() throws KalturaApiException {
+	private Map<String, Integer> getEntries() throws BorhanApiException {
 		Map<String, Integer> result = new HashMap<String, Integer>();
 		
-		KalturaLiveStreamEntryFilter filter = new KalturaLiveStreamEntryFilter();
-		filter.isLive = KalturaNullableBoolean.TRUE_VALUE;
-		filter.orderBy = KalturaLiveStreamEntryOrderBy.CREATED_AT_ASC.getHashCode();
+		BorhanLiveStreamEntryFilter filter = new BorhanLiveStreamEntryFilter();
+		filter.isLive = BorhanNullableBoolean.TRUE_VALUE;
+		filter.orderBy = BorhanLiveStreamEntryOrderBy.CREATED_AT_ASC.getHashCode();
 		
-		KalturaFilterPager pager = new KalturaFilterPager();
+		BorhanFilterPager pager = new BorhanFilterPager();
 		pager.pageSize = 500;
 		pager.pageIndex = 1;
 		
 		while(true) {
-			KalturaLiveStreamListResponse entries = null;
+			BorhanLiveStreamListResponse entries = null;
 			
 			try {
 				entries = client.getLiveStreamService().list(filter, pager);
-			} catch (KalturaApiException e) {
+			} catch (BorhanApiException e) {
 				if("INVALID_KS".equals(e.code)) {
 					client = session.execute();
 					continue;
@@ -117,7 +117,7 @@ public class SystemMonitor {
 					throw e;
 				}
 			}
-			for(KalturaLiveStreamEntry entry : entries.objects) {
+			for(BorhanLiveStreamEntry entry : entries.objects) {
 				result.put(entry.id, entry.partnerId);
 				filter.createdAtGreaterThanOrEqual = entry.createdAt;
 			}

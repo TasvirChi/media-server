@@ -1,6 +1,6 @@
 
 {
-  "KalturaService": {
+  "BorhanService": {
       "serverAddress": "[]",
       "userId": "",
       "adminSecret": "",

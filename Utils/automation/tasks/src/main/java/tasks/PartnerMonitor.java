@@ -1,16 +1,16 @@
 package tasks;
 
-import com.kaltura.client.KalturaApiException;
-import com.kaltura.client.KalturaClient;
-import com.kaltura.client.enums.KalturaNullableBoolean;
-import com.kaltura.client.types.KalturaLiveStreamEntry;
-import com.kaltura.client.types.KalturaLiveStreamEntryFilter;
-import com.kaltura.client.types.KalturaLiveStreamListResponse;
+import com.borhan.client.BorhanApiException;
+import com.borhan.client.BorhanClient;
+import com.borhan.client.enums.BorhanNullableBoolean;
+import com.borhan.client.types.BorhanLiveStreamEntry;
+import com.borhan.client.types.BorhanLiveStreamEntryFilter;
+import com.borhan.client.types.BorhanLiveStreamListResponse;
 import configurations.ConfigurationReader;
 import configurations.TestConfig;
 import downloaders.hls.HLSDownloader;
 import downloaders.hls.DVRInputStreamEnhancer;
-import kaltura.actions.StartSession;
+import borhan.actions.StartSession;
 import utils.ManifestUrlBuilder;
 
 import java.net.URI;
@@ -23,7 +23,7 @@ import java.util.TimerTask;
 public class PartnerMonitor {
 
 	private TestConfig config;
-	private KalturaClient client;
+	private BorhanClient client;
 	
 	public static void main(String[] args) throws Exception {
 		PartnerMonitor monitor = new PartnerMonitor();
@@ -79,17 +79,17 @@ public class PartnerMonitor {
 		return ConfigurationReader.getTestConfigurations(configFilePath);
     }
 	
-	private Set<String> getEntries() throws KalturaApiException {
+	private Set<String> getEntries() throws BorhanApiException {
 		Set<String> result = new HashSet<String>();
 		
-		KalturaLiveStreamEntryFilter filter = new KalturaLiveStreamEntryFilter();
-		filter.isLive = KalturaNullableBoolean.TRUE_VALUE;
-		KalturaLiveStreamListResponse results = client.getLiveStreamService()
+		BorhanLiveStreamEntryFilter filter = new BorhanLiveStreamEntryFilter();
+		filter.isLive = BorhanNullableBoolean.TRUE_VALUE;
+		BorhanLiveStreamListResponse results = client.getLiveStreamService()
 				.list(filter);
 		if (results.totalCount == 0)
 			return result;
 
-		for (KalturaLiveStreamEntry entry : results.objects) {
+		for (BorhanLiveStreamEntry entry : results.objects) {
 			result.add(entry.id);
 		}
 		return result;

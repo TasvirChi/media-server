@@ -1,4 +1,4 @@
 rootProject.name = 'media-server'
-include 'KalturaMediaServer'
-include 'KalturaWowzaServer'
+include 'BorhanMediaServer'
+include 'BorhanWowzaServer'
 

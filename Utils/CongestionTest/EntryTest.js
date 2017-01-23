@@ -1,6 +1,6 @@
 
 var FFMpegTask=require('./ffmpegModule/FFMpegTask.js').FFMpegTask;
-var kle = require('./API/KalturaLiveEntries.js').KalturaLiveEntries;
+var kle = require('./API/BorhanLiveEntries.js').BorhanLiveEntries;
 var q = require('q');
 var _ = require('underscore');
 var LoggerEx = require('./utils').LoggerEx;

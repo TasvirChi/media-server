@@ -1,7 +1,7 @@
 package tests;
 
-import com.kaltura.client.KalturaClient;
-import com.kaltura.client.types.KalturaLiveStreamEntry;
+import com.borhan.client.BorhanClient;
+import com.borhan.client.types.BorhanLiveStreamEntry;
 import configurations.ConfigurationReader;
 import configurations.EncoderConfig;
 import configurations.EntryConfig;
@@ -9,8 +9,8 @@ import configurations.TestConfig;
 import downloaders.StreamDownloader;
 import downloaders.StreamDownloaderFactory;
 import encoders.Encoder;
-import kaltura.actions.CreateLiveEntry;
-import kaltura.actions.StartSession;
+import borhan.actions.CreateLiveEntry;
+import borhan.actions.StartSession;
 import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
 import org.testng.Reporter;
@@ -37,8 +37,8 @@ public class MultiBitrateSyncTest {
     private String dest;
     private Encoder encoder;
     private StreamDownloader downloader;
-    private KalturaClient client;
-    private KalturaLiveStreamEntry entry;
+    private BorhanClient client;
+    private BorhanLiveStreamEntry entry;
 
     private TestConfig getTestConfiguration(String configFileName) throws Exception {
         //read configuration file:

@@ -2,7 +2,7 @@
 
 
 var FFMpegTask=require('./ffmpegModule/FFMpegTask.js').FFMpegTask;
-var kle = require('./API/KalturaLiveEntries.js').KalturaLiveEntries;
+var kle = require('./API/BorhanLiveEntries.js').BorhanLiveEntries;
 var q = require('q');
 var _ = require('underscore');
 var LoggerEx = require('./utils').LoggerEx;
@@ -53,14 +53,14 @@ WowzaTestInfo.prototype.getLiveStatus=function(logger) {
 
 
 
-function KalturaTestInfo(entryObj) {
+function BorhanTestInfo(entryObj) {
 
     this.id=entryObj.entryId;
     this.useBackup=entryObj.useBackup;
     this.flavorsToStream=entryObj.flavorsToStream || 3;
 }
 
-KalturaTestInfo.prototype.getRtmpInfo=function() {
+BorhanTestInfo.prototype.getRtmpInfo=function() {
 
     var self=this;
     return  kle.getEntry(this.id)
@@ -90,12 +90,12 @@ KalturaTestInfo.prototype.getRtmpInfo=function() {
 }
 
 
-KalturaTestInfo.prototype.getMasterManifestUrl=function(logger) {
-    var playManifest=config.KalturaService.serverAddress[0]+"/p/"+config.KalturaService.partnerId+"/sp/"+config.KalturaService.partnerId+"00/playManifest/entryId/"+this.id+"/format/applehttp/protocol/http/a.m3u8";
+BorhanTestInfo.prototype.getMasterManifestUrl=function(logger) {
+    var playManifest=config.BorhanService.serverAddress[0]+"/p/"+config.BorhanService.partnerId+"/sp/"+config.BorhanService.partnerId+"00/playManifest/entryId/"+this.id+"/format/applehttp/protocol/http/a.m3u8";
     return q.resolve(playManifest);
 }
 
-KalturaTestInfo.prototype.checkDualDC=function(entries, numOfWowza) {
+BorhanTestInfo.prototype.checkDualDC=function(entries, numOfWowza) {
 
     if (entries[0].liveStatus!==entries[1].liveStatus){
         return q.reject("Both dc are not in sync on LiveStatus: "+entries[0].liveStatus+ " "+entries[1].liveStatus);
@@ -121,9 +121,9 @@ KalturaTestInfo.prototype.checkDualDC=function(entries, numOfWowza) {
     return q.resolve()
 }
 
-KalturaTestInfo.prototype.getLiveStatus=function(logger) {
+BorhanTestInfo.prototype.getLiveStatus=function(logger) {
     var self=this;
-    if (config.KalturaService.serverAddress.length==1){
+    if (config.BorhanService.serverAddress.length==1){
         return kle.getEntry(this.id)
             .then(function(entry) {
             return entry.liveStatus;
@@ -144,5 +144,5 @@ KalturaTestInfo.prototype.getLiveStatus=function(logger) {
 };
 
 
-exports.KalturaTestInfo=KalturaTestInfo;
+exports.BorhanTestInfo=BorhanTestInfo;
 exports.WowzaTestInfo=WowzaTestInfo;

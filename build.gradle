@@ -20,13 +20,13 @@ subprojects {
         mavenCentral()
         maven {
             //TODO replace to master
-            url "https://raw.github.com/kaltura/KalturaGeneratedAPIClientsJava/PLAT-2504/maven"
+            url "https://raw.github.com/borhan/BorhanGeneratedAPIClientsJava/PLAT-2504/maven"
         }
     }
 
     dependencies {
         //TODO use the + sign for latest version when we start to use repository manager
-        compile 'com.kaltura:KalturaClientLib:3.3.1'
+        compile 'com.borhan:BorhanClientLib:3.3.1'
         provided 'log4j:log4j:1.2.17'
     }
 
